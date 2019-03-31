@@ -40,7 +40,7 @@ const server = http.createServer((req, res) => {
       statusCode = typeof(statusCode) === 'number' ? statusCode : 200
       payload = typeof(payload) === 'object' ? payload : {}
       payloadString = JSON.stringify(payload)
-
+      res.setHeader('Content-Type', 'application/json');
       res.writeHead(statusCode)
       res.end(payloadString);
       console.log("Response is: ", statusCode, payloadString)
