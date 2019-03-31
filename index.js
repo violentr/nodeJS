@@ -27,10 +27,43 @@ const server = http.createServer((req, res) => {
 
   req.on('end', () => {
     buffer += decoder.end()
-    res.end('Hello world');
-    console.log("Request made with payload", buffer)
+    let routerPath = router[trimedPath]
+    let chosenHandler = typeof(router) !== 'undefined' ? routerPath : handlers.notFound
+    let data = {
+      trimedPath,
+      queryString,
+      method,
+      headers,
+      buffer
+    }
+    chosenHandler(data, (statusCode, payload) =>{
+      statusCode = typeof(statusCode) === 'number' ? statusCode : 200
+      payload = typeof(payload) === 'object' ? payload : {}
+      payloadString = JSON.stringify(payload)
+
+      res.writeHead(statusCode)
+      res.end(payloadString);
+      console.log("Response is: ", statusCode, payloadString)
+    })
+
   })
 
 })
 
 server.listen(3000);
+
+//Request router
+
+let handlers = {};
+
+// calback return statusCode and payload
+handlers.sample = (data, callback) =>{
+  callback(406, {'name': 'sample handler'})
+}
+handlers.notFound = (data, callback) =>{
+  callback(404)
+}
+
+let router = {
+  'sample': handlers.sample
+}
