@@ -1,0 +1,12 @@
+{
+  "name": "rest_api",
+  "version": "1.0.0",
+  "description": "REST API",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "violentr",
+  "license": "ISC"
+}
