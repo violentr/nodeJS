@@ -1,13 +1,42 @@
 const http = require('http');
+const https = require('https');
 const url = require('url');
+const fs = require('fs');
+const path = require('path');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 
-PORT = config.port;
+HTTP_PORT = config.httpPort;
+HTTPS_PORT = config.httpsPort;
+
 ENVIRONMENT = config.envName;
 
-const server = http.createServer((req, res) => {
+const httpServerOptions = {
+  'key': fs.readFileSync(path.join(__dirname, 'https/key.pem')),
+  'cert': fs.readFileSync(path.join(__dirname, 'https/cert.pem'))
+}
 
+const httpServer = http.createServer((req, res) => {
+  unifiedServer(req, res);
+
+})
+
+const httpsServer = https.createServer(httpServerOptions, (req, res) => {
+  unifiedServer(req, res);
+
+})
+
+// Running HTTP server
+httpServer.listen(HTTP_PORT, () => {
+  console.log(`Server is listening on port ${HTTP_PORT} in ${ENVIRONMENT} environment`)
+});
+
+// Running HTTPS server
+httpsServer.listen(HTTPS_PORT, () => {
+  console.log(`Server is listening on port ${HTTPS_PORT} in ${ENVIRONMENT} environment`)
+});
+
+const unifiedServer = (req, res) => {
   let parsedUrl = url.parse(req.url, true)
   let pathname = parsedUrl.pathname
   let trimedPath = pathname.replace(/^\/+|\/+$/g, '')
@@ -61,14 +90,7 @@ const server = http.createServer((req, res) => {
     })
 
   })
-
-})
-
-// Running server
-server.listen(PORT, () => {
-  console.log(`Server is listening on port ${PORT} in ${ENVIRONMENT} environment`)
-});
-
+}
 let handlers = {};
 
 // calback return statusCode and payload
