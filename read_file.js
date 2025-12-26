@@ -39,3 +39,21 @@ readFileAsync(fileName).then(() => {
 
 fileName = ".gitignore"
 
+
+// Practice: Replace text in a file
+  
+const replaceInFile = (pathToFile, textToReplace, textToInsert) => {
+  // Read file content as string
+  let contents = fs.readFileSync(pathToFile, 'utf-8');
+  // Replace all occurrences of textToReplace (as a string, not the literal 'textToReplace')
+  // If textToReplace is a string, we need to escape special regex chars and create a global regex
+  const escaped = textToReplace.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(escaped, 'g');
+  contents = contents.replace(regex, textToInsert);
+
+  fs.writeFileSync(pathToFile, contents);
+  console.log(`Replaced ${textToReplace} with ${textToInsert} in ${pathToFile}`);
+  return contents;
+}
+
+replaceInFile('./test.txt', 'test', 'test2');
