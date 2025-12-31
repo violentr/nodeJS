@@ -5,6 +5,16 @@ const fs = require('fs');
 const path = require('path');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
+const data = require('./lib/data');
+
+
+// Test the data.create function
+/*
+data.create('users', '1234567890', { name: 'John Doe', age: 30 }, (statusCode, payload) => {
+  console.log(statusCode, payload);
+});*/
+
+
 
 HTTP_PORT = config.httpPort;
 HTTPS_PORT = config.httpsPort;
