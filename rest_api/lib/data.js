@@ -49,4 +49,45 @@ lib.read = (dir, file, callback) => {
         }
     });
 }
+
+/**
+ * Updates an existing JSON file with new data.
+ * 
+ * @param {string} dir - The directory within the .data folder where the file is stored.
+ * @param {string} file - The name of the file (without .json extension) to update.
+ * @param {object} data - The new data to write to the file.
+ * @param {function} callback - A callback function that receives a status code and a message or error.
+ * 
+ * Steps:
+ * 1. Build the full file path for the target JSON file.
+ * 2. Attempt to open the file for reading and writing ('r+'). If the file does not exist or cannot be opened, respond with an error (code 500).
+ * 3. If opening succeeds, convert the new data into a JSON string.
+ * 4. Truncate (clear) the file's contents to prepare for new data.
+ * 5. Write the JSON string to the (now empty) file.
+ * 6. If writing succeeds, call the callback with a success message. If any error occurs during truncation or writing, call the callback with an error message describing the failure.
+ */
+lib.update = (dir, file, data, callback) => {
+    const filePath = path.join(lib.baseDir, dir, `${file}.json`);
+    fs.open(filePath, 'r+', (err, fd) => {
+        if (!err && fd) { // File opened successfully
+            const stringData = JSON.stringify(data); // Prepare new data
+            fs.ftruncate(fd, (err) => { // Truncate the file
+                if (!err) {
+                    fs.write(fd, stringData, (err) => { // Write new data
+                        if (!err) {
+                            callback(200, { 'message': 'File updated successfully' });
+                        } else {
+                            callback(500, { 'error': 'Failed to write to file' });
+                        }
+                    });
+                } else {
+                    callback(500, { 'error': 'Failed to truncate file' });  
+                }
+            });
+        } else { // File could not be opened
+            callback(500, { 'error': 'Failed to open file' });
+        }
+    });
+}
+
 module.exports = lib;
