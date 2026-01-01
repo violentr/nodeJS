@@ -14,6 +14,11 @@ data.create('users', '1234567890', { name: 'John Doe', age: 30 }, (statusCode, p
   console.log(statusCode, payload);
 });*/
 
+// Test the data.read function
+/* data.read('users', '1234567890', (statusCode, payload) => {
+  console.log(statusCode, payload);
+});*/
+
 
 
 HTTP_PORT = config.httpPort;

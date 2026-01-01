@@ -38,4 +38,15 @@ lib.create = (dir, file, data, callback) => {
     });
 }
 
+lib.read = (dir, file, callback) => {
+    const filePath = path.join(lib.baseDir, dir, `${file}.json`);
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            callback(500, { 'error': 'Failed to read file' });
+        } else {
+            callback(200, { 'data': JSON.parse(data) });
+        }
+    });
+}
 module.exports = lib;
