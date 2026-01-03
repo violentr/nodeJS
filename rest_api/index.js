@@ -7,6 +7,7 @@ const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 const data = require('./lib/data');
 const handlers = require('./lib/handlers');
+const _helpers = require('./lib/helpers');
 
 // Test the data.create function
 /*
@@ -94,7 +95,7 @@ const unifiedServer = (req, res) => {
       queryString,
       method,
       headers,
-      buffer
+      payload: _helpers.parseJsonToObject(buffer)
     }
     // This part of the code will be executed after the end event is triggered !
     chosenHandler(data, (statusCode, payload) =>{
@@ -109,7 +110,7 @@ const unifiedServer = (req, res) => {
       res.writeHead(statusCode)
       
       res.end(payloadString);
-      console.log("Body data is: ", data.buffer);
+      console.log("Body data is: ", data.payload);
       console.log("Response is: ", statusCode, payloadString)
     })
 
@@ -118,5 +119,6 @@ const unifiedServer = (req, res) => {
 
 // Router with path and handler
 let router = {
-  'ping': handlers.ping
+  'ping': handlers.ping,
+  'users': handlers.users
 }
