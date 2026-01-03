@@ -24,12 +24,14 @@ lib.create = (dir, file, data, callback) => {
            const stringData = JSON.stringify(data);
            fs.write(fd, stringData, (err) => {
             if (err) {
+                fs.close(fd, () => {}); // Close file descriptor even on error
                 callback(500, { 'error': 'Failed to write to file' });
             } else {
-                callback(200, { 'message': 'File created successfully' });
                 fs.close(fd, (err) => {
                     if (err) {
                         callback(500, { 'error': 'Failed to close file' });
+                    } else {
+                        callback(200, { 'message': 'File created successfully' });
                     }
                 });
             }
