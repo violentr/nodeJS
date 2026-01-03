@@ -24,6 +24,12 @@ data.create('users', '1234567890', { name: 'John Doe', age: 30 }, (statusCode, p
   console.log(statusCode, payload);
 });*/
 
+// Test the data.delete function
+/*
+data.delete('users', '1234567890', (statusCode, payload) => {
+  console.log(statusCode, payload);
+});*/
+
 HTTP_PORT = config.httpPort;
 HTTPS_PORT = config.httpsPort;
 

@@ -90,4 +90,14 @@ lib.update = (dir, file, data, callback) => {
     });
 }
 
+lib.delete = (dir, file, callback) => {
+    const filePath = path.join(lib.baseDir, dir, `${file}.json`);
+    fs.unlink(filePath, (err) => {
+        if (err) {
+            callback(500, { 'error': 'Failed to delete file' });
+        } else {
+            callback(200, { 'message': 'File deleted successfully' });
+        }
+    });
+}
 module.exports = lib;
