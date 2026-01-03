@@ -6,7 +6,7 @@ const path = require('path');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config = require('./config');
 const data = require('./lib/data');
-
+const handlers = require('./lib/handlers');
 
 // Test the data.create function
 /*
@@ -114,16 +114,6 @@ const unifiedServer = (req, res) => {
     })
 
   })
-}
-let handlers = {};
-
-// calback return statusCode and payload
-handlers.ping = (data, callback) =>{
-  callback(200);
-}
-// Not found handler
-handlers.notFound = (data, callback) =>{
-  callback(404, {'error': 'Not Found'})
 }
 
 // Router with path and handler
