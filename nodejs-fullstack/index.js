@@ -1,9 +1,9 @@
-const express = require('express');
-const app = express();
-const router = require('./routes/index');
-
+require('dotenv').config({debug: true});
 require('./backend/database/database').connect();
-require('dotenv').config();
+const express = require('express');
+const router = require('./routes/index');
+const app = express();
+
 
 const port = process.env.PORT || 3000;
 
