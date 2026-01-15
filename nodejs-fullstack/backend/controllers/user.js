@@ -149,4 +149,28 @@ user.signup = async (req, res) => {
   }
 };
 
+user.login = async (req, res) => {
+  try{
+    const {emailOrUsername, password } = req.body;
+    if (!(emailOrUsername && password)){
+      res.status(400).send("Username and password required");
+    }
+    let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    const data = regexEmail.test(emailOrUsername) ? {email: emailOrUsername} : {username: emailOrUsername};
+    const user = await User.findOne(data);
+    //console.log("User: ", user)
+    console.log("User: ", user)
+    if (user && (await bcrypt.compare(password, user.password))){
+      const email = user.email;
+      const token = jwt.sign({user_id: user._id, email}, process.env.TOKEN_SECRET_KEY, {expiresIn: "2h"});
+      user.token = token;
+      return res.status(200).json(user.token);
+    }
+    return res.status(400).send("Invalid credentials");
+  }catch(error){
+    console.error(error)
+    return res.status(400).send(error.message);
+  }
+}
+
 module.exports = user;
