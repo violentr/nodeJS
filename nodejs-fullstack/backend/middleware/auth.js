@@ -7,7 +7,7 @@ middleware.verify = (req, res, next) => {
         return res.status(403).send("A token required for authentication");
     }
     try {
-        const decoded = jwt.sign(token, process.env.TOKEN_SECRET_KEY);
+        const decoded = jwt.verify(token, process.env.TOKEN_SECRET_KEY);
         req.user = decoded;
     }catch(error){
         return res.status(401).send("Invalid token");
