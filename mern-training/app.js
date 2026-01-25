@@ -1,42 +1,48 @@
 
-const addNumber = (myNumbers, number) => {
-  // Do not mutate original object create new instead
-  return [...myNumbers, number]
-}
-
-const removeNumber = (myNumbers, numberToRemove) => {
-  return myNumbers.filter((e) => e !== numberToRemove);
-}
-
-const sum = (numbers) =>{
-  return  numbers.reduce((sum, number) => sum += number,0);
-}
-const average = (numbers) =>{
-  return (sum(numbers)/numbers.length).toFixed(2);
-}
-
-const max = (numbers) => {
-  return Math.max(...numbers);
-}
-
-let savedData = localStorage.getItem("numbers");
-let numbers = savedData ? JSON.parse(savedData) : [];
-
 const numberInput = document.getElementById('numberInput');
 const addBtn = document.getElementById('addBtn');
 const display = document.getElementById('display');
 const removeBtn = document.getElementById("removeBtn");
 const clearButton = document.getElementById("clearBtn");
 
-const render = () => {
-  display.innerText = numbers.join(', ');
-  document.getElementById("sumDisplay").innerText = numbers.length > 0 ? sum(numbers) : 0
-  document.getElementById("avgDisplay").innerText = numbers.length > 0 ? average(numbers) : "N/A"
-  document.getElementById("maxDisplay").innerText = numbers.length > 0 ? max(numbers) : "N/A"
-  localStorage.setItem("numbers", JSON.stringify(numbers));
-};
+const NumberApp = {
+  data: [],
+  sum : function (numbers){
+    return  numbers.reduce((sum, number) => sum += number,0);
+  },
+  average : function (numbers){
+    return this.sum(numbers)/numbers.length;
+  },
+  max: function (numbers){
+    return Math.max(...numbers);
+  },
+  add:  function (number){
+  // Do not mutate original object create new instead
+    this.data = [...this.data, number]
+    this.render()
+  },
+  remove : function (numberToRemove){
+    this.data = this.data.filter((e) => e !== numberToRemove);
+    this.render()
+  },
+  clear: function(){
+    this.data = [];
+    this.render();
+  },
+  render: function (){
+    display.innerText = this.data.join(', ');
+    document.getElementById("sumDisplay").innerText = this.data.length > 0 ? this.sum(this.data) : 0
+    document.getElementById("avgDisplay").innerText = this.data.length > 0 ? this.average(this.data).toFixed(2) : "N/A"
+    document.getElementById("maxDisplay").innerText = this.data.length > 0 ? this.max(this.data) : "N/A"
+    localStorage.setItem("numbers", JSON.stringify(this.data));
+  }
+}
 
-render();
+let savedData = localStorage.getItem("numbers");
+NumberApp.data = savedData ? JSON.parse(savedData) : [];
+NumberApp.render();
+
+
 
 const getValidNumber = () => {
   const inputNumber = Number(numberInput.value);
@@ -47,8 +53,7 @@ addBtn.addEventListener('click', () => {
   const inputNumber= getValidNumber();
 
   if (inputNumber !== null) {
-    numbers = addNumber(numbers, inputNumber);
-    render();
+    NumberApp.add(inputNumber);
     numberInput.value = '';
   }
 });
@@ -57,13 +62,21 @@ removeBtn.addEventListener('click', () => {
   const inputNumber = getValidNumber();
 
   if (inputNumber !== null) {
-    numbers = removeNumber(numbers, inputNumber);
-    render();
+    NumberApp.remove(inputNumber);
     numberInput.value = '';
   }
 });
 
 clearButton.addEventListener('click', () =>{
-  numbers = [];
-  render();
+  NumberApp.clear();
 })
+
+/*
+Summary
+✅ Single source of truth — NumberApp.data is the only place storing numbers
+✅ Encapsulation — all logic is inside one object
+✅ DRY principle — render() is called automatically, no repetition
+✅ Validation extracted — getValidNumber() reusable helper
+✅ Immutability maintained — still using spread operator
+✅ Clear naming — every function does exactly what its name says
+*/
