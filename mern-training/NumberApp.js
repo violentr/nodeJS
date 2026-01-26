@@ -28,8 +28,24 @@ const NumberApp = {
     this.data = [];
     this.render();
   },
+  removeById: function(index){
+    this.data = this.data.filter((_, i) => i !== index);
+    this.render();
+
+  },
   render: function (){
-    this.displayElement.innerText = this.data.join(', ');
+    this.displayElement.innerHTML = '';
+    const ul = document.createElement('ul');
+    this.data.forEach((num, index) =>{
+        const li = document.createElement('li');
+        li.textContent = num;
+        const btn = document.createElement('button');
+        btn.textContent = 'x';
+        btn.onclick =() => this.removeById(index);
+        li.appendChild(btn);
+        ul.appendChild(li);
+    })
+    this.displayElement.appendChild(ul);
     document.getElementById("sumDisplay").innerText = this.data.length > 0 ? this.sum(this.data) : 0
     document.getElementById("avgDisplay").innerText = this.data.length > 0 ? this.average(this.data).toFixed(2) : "N/A"
     document.getElementById("maxDisplay").innerText = this.data.length > 0 ? this.max(this.data) : "N/A"
