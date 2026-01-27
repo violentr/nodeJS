@@ -8,11 +8,13 @@ function App() {
     return saved ? JSON.parse(saved) : initialValues;
   });
   const [inputValue, setInputValue] = useState('');
-
   // save to Localstorage whenever numbers change
   useEffect(()=>{
     localStorage.setItem("numbers", JSON.stringify(numbers))
   },[numbers]) // Dependency array
+  const sum = numbers.reduce((acc, n) => acc += n)
+  const average = numbers.length > 0 ? (sum/numbers.length).toFixed(2) : 'N/A';
+  const max = numbers.length > 0 ? Math.max(...numbers) : 'N/A';
 
   const handleAdd = () =>{
     const num = Number(inputValue);
@@ -31,6 +33,11 @@ function App() {
   return (
     <div>
       <h1> React Number App</h1>
+      <div className="stats">
+        <p>Sum: {sum}</p>
+        <p>Average: {average}</p>
+        <p>Max: {max}</p>
+      </div>
       <input type="number"
         value={inputValue}
         onChange ={(e) => setInputValue(e.target.value)}
