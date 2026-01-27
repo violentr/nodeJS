@@ -1,10 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
 function App() {
   const initialValues = [5,10,15]
-  const [numbers, setNumbers] = useState(initialValues);
+  const [numbers, setNumbers] = useState(() => {
+    const saved = localStorage.getItem("numbers");
+    return saved ? JSON.parse(saved) : initialValues;
+  });
   const [inputValue, setInputValue] = useState('');
+
+  // save to Localstorage whenever numbers change
+  useEffect(()=>{
+    localStorage.setItem("numbers", JSON.stringify(numbers))
+  },[numbers]) // Dependency array
 
   const handleAdd = () =>{
     const num = Number(inputValue);
