@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import Stats from './Stats';
+import NumberList from './NumberList';
 
 
 function App() {
@@ -12,9 +14,7 @@ function App() {
   useEffect(()=>{
     localStorage.setItem("numbers", JSON.stringify(numbers))
   },[numbers]) // Dependency array
-  const sum = numbers.reduce((acc, n) => acc += n)
-  const average = numbers.length > 0 ? (sum/numbers.length).toFixed(2) : 'N/A';
-  const max = numbers.length > 0 ? Math.max(...numbers) : 'N/A';
+ 
 
   const handleAdd = () =>{
     const num = Number(inputValue);
@@ -33,11 +33,6 @@ function App() {
   return (
     <div>
       <h1> React Number App</h1>
-      <div className="stats">
-        <p>Sum: {sum}</p>
-        <p>Average: {average}</p>
-        <p>Max: {max}</p>
-      </div>
       <input type="number"
         value={inputValue}
         onChange ={(e) => setInputValue(e.target.value)}
@@ -46,14 +41,8 @@ function App() {
       <button onClick={handleAdd}>Add</button>
       
       <button onClick={handleClearAll}>Clear</button>
-
-      <ul>
-        {numbers.map((num, index) => (
-          <li key={index}> {num} 
-          <button onClick={()=>handleRemove(index)}>x</button>
-          </li>
-        ))}
-      </ul>
+      <Stats numbers={numbers}/>
+      <NumberList numbers={numbers} onRemove={handleRemove}/>
     </div>
   )
 
