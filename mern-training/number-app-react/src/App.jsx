@@ -31,19 +31,28 @@ function App() {
   }
 
   return (
-    <div>
-      <h1> React Number App</h1>
-      <input type="number"
-        value={inputValue}
-        onChange ={(e) => setInputValue(e.target.value)}
-        placeholder="Enter a number"
-      />
-      <button onClick={handleAdd}>Add</button>
-      
-      <button onClick={handleClearAll}>Clear</button>
-      <Stats numbers={numbers}/>
-      <NumberList numbers={numbers} onRemove={handleRemove}/>
-    </div>
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-4">Number Utility</h1>
+          <input type="number"
+            value={inputValue}
+            onChange ={(e) => setInputValue(e.target.value)}
+            placeholder="Enter a number"
+            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <div className="flex gap-2">
+            <button onClick={handleAdd}
+            className="flex-1 bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >Add</button>
+            <button onClick={handleClearAll}
+            className="px-4 bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+            >Clear</button>
+          </div>
+          
+          <Stats numbers={numbers}/>
+          <NumberList numbers={numbers} onRemove={handleRemove}/>
+      </div>
+      </div>
   )
 
 }
