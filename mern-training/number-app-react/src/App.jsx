@@ -16,12 +16,28 @@ function App() {
   });
 
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   // save to Localstorage whenever numbers change
   useEffect(()=>{
     localStorage.setItem("numbers", JSON.stringify(numbers))
   },[numbers]) // Dependency array
  
-
+  useEffect(()=>{
+    const fetchInitialData = async() =>{
+      setIsLoading(true);
+      try {
+        const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+        const data = await response.json();
+        const numbers = [data.userId, data.id, data.id * 2, data.id * 3];
+        setNumbers(numbers);
+      }catch(err){
+        console.error(err);
+      }finally{
+        setIsLoading(false);
+      }
+    }
+    fetchInitialData();
+  }, []);
   const handleAdd = () =>{
     const num = Number(inputValue);
     if (!isNaN(num) && inputValue !== ''){
@@ -56,9 +72,14 @@ function App() {
               className="px-4 bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
               >Clear</button>
             </div>
-            
-            <Stats numbers={numbers}/>
-            <NumberList numbers={numbers} onRemove={handleRemove}/>
+            {isLoading ? (
+              <p className="text-blue-500 font-bold animate-pulse">Loading initial numbers...</p>
+              ) : (
+              <>
+                <Stats numbers={numbers} />
+                <NumberList numbers={numbers} onRemove={handleRemove} />
+              </>
+            )}
           </div>
         </div>
       }
