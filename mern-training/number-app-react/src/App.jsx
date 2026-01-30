@@ -38,7 +38,7 @@ function App() {
             value={inputValue}
             onChange ={(e) => setInputValue(e.target.value)}
             placeholder="Enter a number"
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full mb-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <div className="flex gap-2">
             <button onClick={handleAdd}

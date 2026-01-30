@@ -8,7 +8,7 @@ function NumberList({ numbers, onRemove }) {
       {numbers.map((num, index) => (
         <li 
           key={index} 
-          className="flex justify-between items-center p-3 bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors"
+          className="flex justify-between items-center bg-gray-50 rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors"
         >
           <span className="font-medium text-gray-700">{num}</span>
           <button 

@@ -3,7 +3,7 @@ function Stats ({numbers}){
   const average = numbers.length > 0 ? (sum/numbers.length).toFixed(2) : 'N/A';
   const max = numbers.length > 0 ? Math.max(...numbers) : 'N/A';
   return (
-    <div className="grid grid-cols-3 gap-4 mb-6">
+    <div className="grid grid-cols-3 mt-2 gap-4 mb-2">
       <div className="bg-blue-50 p-3 rounded-lg text-center">
         <p className="text-xs text-blue-600 uppercase font-bold">Sum</p>
         <p className="text-xl font-bold text-blue-900">{sum}</p>
