@@ -1,0 +1,104 @@
+<!-- Semantically correct HTML markup -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A concise description of your page content for search engines.">
+    <title>Semantically Correct HTML5 Template</title>
+    <!-- Link to CSS here -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- LANDMARK: Header (Site-wide branding and navigation) -->
+    <header>
+        <div class="logo">
+            <a href="/">CompanyLogo</a>
+        </div>
+
+        <!-- LANDMARK: Navigation -->
+        <nav aria-label="Main Navigation">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/services">Services</a></li>
+                <li><a href="/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- LANDMARK: Main (The unique content of this specific page) -->
+    <main id="main-content">
+
+        <!-- HERO SECTION -->
+        <section class="hero" aria-labelledby="hero-heading">
+            <h1 id="hero-heading">Main Page Title (H1)</h1>
+            <p>This is the primary introduction to the page. It explains the main value proposition.</p>
+            <button type="button" class="btn-primary">Get Started</button>
+        </section>
+
+        <!-- CONTENT SECTION -->
+        <section class="features" aria-labelledby="features-heading">
+            <h2 id="features-heading">Our Key Features</h2>
+
+            <div class="grid">
+                <!-- ARTICLE: Standalone content that makes sense on its own -->
+                <article class="feature-card">
+                    <h3>Feature One</h3>
+                    <p>Description of the first feature. This is wrapped in an article because it is a self-contained component.</p>
+                </article>
+
+                <article class="feature-card">
+                    <h3>Feature Two</h3>
+                    <p>Description of the second feature. Using H3 because it is a sub-section of the H2.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- BLOG/NEWS SECTION -->
+        <section class="latest-news">
+            <h2>Latest Updates</h2>
+            <article>
+                <h3><a href="/blog/post-1">Understanding Semantics</a></h3>
+                <p>Published on <time datetime="2024-05-20">May 20, 2024</time></p>
+                <p>A brief summary of the blog post content...</p>
+            </article>
+        </section>
+
+    </main>
+
+    <!-- LANDMARK: Aside (Related but not primary content, e.g., sidebar) -->
+    <aside aria-label="Related Information">
+        <h2>Related Resources</h2>
+        <ul>
+            <li><a href="#">Documentation</a></li>
+            <li><a href="#">Community Forum</a></li>
+            <li><a href="#">Help Center</a></li>
+        </ul>
+    </aside>
+
+    <!-- LANDMARK: Footer (Copyright, secondary links, contact info) -->
+    <footer>
+        <section class="footer-contact">
+            <h4>Contact Us</h4>
+            <address>
+                Email: <a href="mailto:info@example.com">info@example.com</a><br>
+                Phone: <a href="tel:+1234567890">(123) 456-7890</a>
+            </address>
+        </section>
+
+        <nav aria-label="Footer Navigation">
+            <ul>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/terms">Terms of Service</a></li>
+            </ul>
+        </nav>
+
+        <p class="copyright">
+            <small>&copy; 2024 Company Name. All rights reserved.</small>
+        </p>
+    </footer>
+
+</body>
+</html>
