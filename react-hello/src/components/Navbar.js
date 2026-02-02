@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Transition } from '@headlessui/react';
 import { Context } from '../context';
+import logo from "../assets/logo.png"
 
 // Authentication actions component
 function Actions ({ auth, customStyle }) {
