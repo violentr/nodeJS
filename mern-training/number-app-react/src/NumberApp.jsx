@@ -20,10 +20,9 @@ const NumberApp = function(){
         const fetchInitialData = async() =>{
         setIsLoading(true);
         try {
-            const response = await fetch('https://jsonplaceholder.typicode.com/posts/1');
+            const response = await fetch("http://localhost:5000/api/numbers");
             const data = await response.json();
-            const numbers = [data.userId, data.id, data.id * 2, data.id * 3];
-            setNumbers(numbers);
+            setNumbers(data);
         }catch(err){
             console.error(err);
         }finally{
