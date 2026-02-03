@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import Stats from './Stats';
 import NumberList from './NumberList';
+const API_URL = "http://localhost:5000/api";
 
 const NumberApp = function(){
     const initialValues = [5,10,15]
@@ -20,7 +21,7 @@ const NumberApp = function(){
         const fetchInitialData = async() =>{
         setIsLoading(true);
         try {
-            const response = await fetch("http://localhost:5000/api/numbers");
+            const response = await fetch(`${API_URL}/numbers`);
             const data = await response.json();
             setNumbers(data);
         }catch(err){
@@ -31,11 +32,25 @@ const NumberApp = function(){
         }
         fetchInitialData();
     }, []);
-    const handleAdd = () =>{
+    const handleAdd = async () =>{
         const num = Number(inputValue);
         if (!isNaN(num) && inputValue !== ''){
-        setNumbers([...numbers, num]);
-        setInputValue('');
+            try{
+                const response = await fetch(`${API_URL}/numbers`,{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({number: num})
+                });
+            if (response.ok){
+                setNumbers([...numbers, num]);
+                setInputValue('');
+            }
+            }catch(err){
+                console.error(err);
+            }
+        
         }
     }
     const handleRemove = (index) =>{
