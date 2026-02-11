@@ -24,9 +24,18 @@ app.use(express.json());
 
 app.get('/api/numbers', async (req,res)=>{
     const docs = await NumberModel.find();
-    const numbers = docs.map(doc => doc.value);
-    res.json(numbers);
+    res.json(docs);
 })
+
+app.delete('/api/numbers/:id', async (req, res) =>{
+    try {
+        const {id} = req.params;
+        await NumberModel.findByIdAndDelete(id);
+        res.json({message: "Deleted successfully "})
+    }catch(err){
+        res.status(500).json({error: err.message})
+    }
+} )
 
 app.post('/api/numbers', async (req, res)=>{
     try {
