@@ -1,7 +1,8 @@
 function Stats ({numbers}){
-  const sum = numbers.reduce((acc, n) => acc += n, 0)
+  const sum = numbers.reduce((acc, n) => acc += n.value, 0)
+  const values = numbers.map((i) => i.value)
   const average = numbers.length > 0 ? (sum/numbers.length).toFixed(2) : 'N/A';
-  const max = numbers.length > 0 ? Math.max(...numbers) : 'N/A';
+  const max = numbers.length > 0 ? Math.max(...values) : 'N/A';
   return (
     <div className="grid grid-cols-3 mt-2 gap-4 mb-2">
       <div className="bg-blue-50 p-3 rounded-lg text-center">

@@ -44,7 +44,9 @@ const NumberApp = function(){
                     body: JSON.stringify({number: num})
                 });
             if (response.ok){
-                setNumbers([...numbers, num]);
+                const updatedNumbers = await fetch(`${API_URL}/numbers`).then(r => r.json());
+                console.log(updatedNumbers)
+                setNumbers(updatedNumbers);
                 setInputValue('');
             }
             }catch(err){
@@ -53,8 +55,17 @@ const NumberApp = function(){
         
         }
     }
-    const handleRemove = (index) =>{
-        setNumbers(numbers.filter((_, i) => i !== index))
+    const handleRemove = async (id) =>{
+        try{
+            const response = await fetch(`${API_URL}/numbers/${id}`, {method: 'DELETE'});            
+            if (response.ok){
+                console.log(numbers)
+                setNumbers(prevNumbers =>  prevNumbers.filter(n => n._id !== id))
+            }
+        }catch(err){
+            console.error("Delete failed", err.message)
+        }
+        
     }
     const handleClearAll = () =>{
         setNumbers([]);
