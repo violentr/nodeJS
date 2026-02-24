@@ -28,11 +28,6 @@ const NumberApp = {
     this.data = [];
     this.render();
   },
-  removeById: function(index){
-    this.data = this.data.filter((_, i) => i !== index);
-    this.render();
-
-  },
   render: function (){
     this.displayElement.innerHTML = '';
     const ul = document.createElement('ul');
