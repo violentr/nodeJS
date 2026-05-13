@@ -10,7 +10,6 @@ async function main (){
     const client = await mongodb.MongoClient.connect(process.env.MOVIEREVIEWS_DB_URI);
     const port = process.env.PORT || 8000;
    try{
-       await client.connect();
        await MoviesDAO.injectDB(client);
 
        app.listen(port, () => {

@@ -1,5 +1,3 @@
-import e from "express";
-
 let movies;
 /* this is a Movies data access object */
 
