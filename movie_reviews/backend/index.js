@@ -1,24 +1,24 @@
 import app from './server.js';
 import mongodb from 'mongodb';
 import dotenv from 'dotenv';
-import MoviesDAO  from "./dao/moviesDAO.js";
+import MoviesDAO from "./dao/moviesDAO.js";
+import ReviewsDAO from "./dao/reviewsDAO.js";
 
 
-
-async function main (){
+async function main() {
     dotenv.config();
     const client = await mongodb.MongoClient.connect(process.env.MOVIEREVIEWS_DB_URI);
     const port = process.env.PORT || 8000;
-   try{
-       await MoviesDAO.injectDB(client);
-
-       app.listen(port, () => {
-           console.log(`Server is running on port ${port}`);
-       })
-   }catch(error) {
-       console.error(error);
-       process.exit(1);
-   }
+    try {
+        await MoviesDAO.injectDB(client);
+        await ReviewsDAO.injectDB(client);
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        })
+    } catch (error) {
+        console.error(error);
+        process.exit(1);
+    }
 }
 
 main().catch(console.error);
