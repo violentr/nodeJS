@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "cd backend && nodemon index.js",
+    "debug": "cd backend && MONGO_LOG_LEVEL=debug node -r ../experiments/mongo_logger.cjs index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "axios": "^1.16.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
