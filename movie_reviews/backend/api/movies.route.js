@@ -7,5 +7,6 @@ router.route('/').get(MoviesController.apiGetAllMovies);
 router.route('/review')
     .post(ReviewsController.apiPostReview)
     .put(ReviewsController.apiUpdateReview)
+    .delete(ReviewsController.apiDeleteReview)
 
 export default router;

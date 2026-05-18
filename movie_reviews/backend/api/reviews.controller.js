@@ -52,4 +52,24 @@ export default class ReviewsController {
             res.status(500).json({error: err.message});
         }
     }
+    static async apiDeleteReview(req, res, next){
+        try{
+            const reviewId = req.body.review_id;
+            const userId = req.body.user_id;
+            if (reviewId == null || reviewId.length === 0) {
+                return res.status(400).json({error: "Review id is required"});
+            }
+            const ReviewResponse = await ReviewsDAO.deleteReview(reviewId, userId);
+
+            if (ReviewResponse.error){
+                return res.status(400).json({error: "Review id is required"});
+            }
+            if (ReviewResponse.deletedCount === 0) {
+                return res.status(404).json({ error: "Review not found or user not authorized" });
+            }
+            res.json({status: "success"});
+        }catch(err){
+            res.status(500).json({error: err.message});
+        }
+    }
 }
