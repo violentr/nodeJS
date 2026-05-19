@@ -18,15 +18,13 @@ export default class ReviewsController {
             )
             var { error } = ReviewResponse
             if (error) {
-                res.status(400).json({ error })
-                return
+               return res.status(400).json({ error })
             }
             res.status(201).json({status: "success"});
         } catch (err) {
             res.status(500).json({error: err.message});
         }
     }
-
     static async apiUpdateReview(req, res, next){
         try{
             const reviewId = req.body.review_id;
@@ -39,12 +37,12 @@ export default class ReviewsController {
                 review,
                 date
             )
-            var { error } = ReviewResponse
+            var { error, modifiedCount } = ReviewResponse
             if (error) {
                 res.status(400).json({ error })
                 return
             }
-            if (ReviewResponse.modifiedCount === 0){
+            if (modifiedCount === 0){
                 throw new Error("Review not found");
             }
             res.json({status: "success"});
@@ -60,12 +58,12 @@ export default class ReviewsController {
                 return res.status(400).json({error: "Review id is required"});
             }
             const ReviewResponse = await ReviewsDAO.deleteReview(reviewId, userId);
-
-            if (ReviewResponse.error){
+            const { error, deletedCount } = ReviewResponse;
+            if (error){
                 return res.status(400).json({error: "Review id is required"});
             }
-            if (ReviewResponse.deletedCount === 0) {
-                return res.status(404).json({ error: "Review not found or user not authorized" });
+            if (deletedCount === 0) {
+                return res.status(404).json({ error: "Review not found" });
             }
             res.json({status: "success"});
         }catch(err){
