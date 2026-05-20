@@ -1,5 +1,7 @@
 let movies;
 /* this is a Movies data access object */
+import mongodb from 'mongodb';
+const ObjectId = mongodb.ObjectId;
 
 class MoviesDAO {
     static async injectDB(conn) {
@@ -10,6 +12,21 @@ class MoviesDAO {
         } catch (error) {
             console.error(error);
         }
+    }
+
+    static async getMovieById(movieId){
+        if (!movieId) return null;
+        try{
+            return await movies.aggregate([
+                {$match: {_id: new ObjectId(movieId)}},
+                {$lookup: {from: 'reviews', localField: '_id', foreignField: 'movie_id', as: 'reviews'}}
+
+            ]).next()
+        }catch(e){
+            console.error(`Unable to fetch movie: ${e}`);
+            throw e;
+        }
+
     }
 
     static async getAllMovies({filters = null, page = 0, moviesPerPage = 20} = {}) {

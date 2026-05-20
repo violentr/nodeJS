@@ -18,6 +18,18 @@ export default class MoviesController {
             entries_per_page: moviesPerPage,
             total_results: totalNumMovies,
         }
-        res.json(response);
+        return res.json(response);
+    }
+    static async apiGetMovieById(req, res, next) {
+        try{
+            const movieId = req.params.id || {};
+            let id = await MoviesDAO.getMovieById(movieId);
+            if (id == null) {
+                return res.status(404).json({error: "Movie not found"});
+            }
+            return res.json(id);
+        }catch(err){
+            return res.status(500).json({error: "Movie id is required"});
+        }
     }
 }

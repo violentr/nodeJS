@@ -4,6 +4,8 @@ import ReviewsController from '../api/reviews.controller.js';
 
 const router = express.Router();
 router.route('/').get(MoviesController.apiGetAllMovies);
+router.route('/id/:id').get(MoviesController.apiGetMovieById);
+
 router.route('/review')
     .post(ReviewsController.apiPostReview)
     .put(ReviewsController.apiUpdateReview)
