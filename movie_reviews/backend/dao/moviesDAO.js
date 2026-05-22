@@ -52,6 +52,18 @@ class MoviesDAO {
             return {moviesList: [], totalNumMovies: 0};
         }
     }
+
+    static async getRatings() {
+        let ratings = [];
+        try {
+            ratings = await movies.distinct("rated");
+            return ratings;
+        } catch (e) {
+            console.error(`Unable to get ratings: ${e.message}`);
+            return ratings;
+
+        }
+    }
 }
 
 export default MoviesDAO;

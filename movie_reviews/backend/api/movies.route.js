@@ -8,6 +8,7 @@ import { validateReviewId } from './middleware/validateId.js';
 const router = express.Router();
 router.route('/').get(MoviesController.apiGetAllMovies);
 router.route('/id/:id').get(validateMovieId, MoviesController.apiGetMovieById);
+router.route('/ratings').get(MoviesController.apiGetRating);
 
 router.route('/review')
     .post(ReviewsController.apiPostReview)

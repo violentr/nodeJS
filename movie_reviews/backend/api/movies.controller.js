@@ -32,4 +32,14 @@ export default class MoviesController {
             return res.status(500).json({error: "Movie id is required"});
         }
     }
+    static async apiGetRating(req, res, next){
+
+        try{
+            let propertyTypes = await MoviesDAO.getRatings();
+            return res.json(propertyTypes);
+        }catch(err){
+            console.log(`api ${err.message}`);
+            return res.status(500).json({error: "Server error"});
+        }
+    }
 }
