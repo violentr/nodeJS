@@ -11,7 +11,7 @@ router.route('/id/:id').get(validateMovieId, MoviesController.apiGetMovieById);
 router.route('/ratings').get(MoviesController.apiGetRating);
 
 router.route('/review')
-    .post(ReviewsController.apiPostReview)
+    .post(validateMovieId, ReviewsController.apiPostReview)
     .put(validateReviewId, ReviewsController.apiUpdateReview)
     .delete(validateReviewId, ReviewsController.apiDeleteReview)
 
