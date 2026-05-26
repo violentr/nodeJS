@@ -1,6 +1,6 @@
 import React from 'react'
 import {useState} from 'react'
-import {Switch, Route, Link} from 'react-router-dom'
+import {Routes, Route, Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AddReview from './components/add-review'
 import MoviesList from './components/movies-list'
@@ -33,11 +33,18 @@ function App() {
                         <Link to={"/movies"}>Movies</Link>
                     </Nav.Link>
                     <Nav.Link>
-                        {user ? (<a onClick={logout}>Logout</a>) : (<Link to={"/login"}>Login</Link>)}
+                        {user ? (<Link to={"/logout"} onClick={logout}>Logout</Link>) : (<Link to={"/login"}>Login</Link>)}
                     </Nav.Link>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
+        <Routes>
+            <Route path="/" element={<MoviesList />} />
+            <Route path="/movies" element={<MoviesList />} />
+            <Route path="/movies/:id/review" element={<AddReview user={user} />} />
+            <Route path="/movies/:id" element={<Movie user={user} />} />
+            <Route path="/login" element={<Login login={login} />} />
+        </Routes>
     </div>
   );
 }
