@@ -1,10 +1,6 @@
-import React from 'react';
+import React from "react"
 
 function Movie() {
-    return(
-        <div className="App">
-            Movie
-        </div>
-    )
+  return <div className="App">Movie</div>
 }
-export default Movie;
+export default Movie
