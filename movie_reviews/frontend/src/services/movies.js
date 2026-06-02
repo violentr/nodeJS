@@ -13,6 +13,11 @@ class MovieDataService {
   get(id) {
     return api.get(`/movies/id/${id}`)
   }
+
+  getRatings() {
+    return api.get(`/movies/ratings`)
+  }
+
   find(query, by = "title", page = 0) {
     return api.get(`/movies/find?query=${query}&by=${by}&page=${page}`)
   }
