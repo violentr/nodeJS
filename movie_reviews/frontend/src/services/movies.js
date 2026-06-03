@@ -1,5 +1,5 @@
 import axios from "axios"
-const API_URL = "http://localhost:3000/api/v1"
+const API_URL = "http://localhost:5000/api/v1"
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -19,7 +19,7 @@ class MovieDataService {
   }
 
   find(query, by = "title", page = 0) {
-    return api.get(`/movies/find?query=${query}&by=${by}&page=${page}`)
+    return api.get(`/movies?${by}=${query}&by=${by}&page=${page}`)
   }
 
   createReview({ movieId, review, name, userId }) {
