@@ -1,0 +1,3 @@
+GET /api/v1/movies/id/573a1390f29313caabcd56df
+HOST: localhost:5000
+Content-Type: application/json
